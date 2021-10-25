@@ -29,3 +29,5 @@ UserSchema.method('toJSON', function() {
     object.uid = _id;
     return object;
 });
+
+module.exports = model('User', UserSchema);

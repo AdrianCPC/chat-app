@@ -1,0 +1,29 @@
+//Models and schema for message
+const { Schema, model } = require("mongoose");
+
+const MessageSchema = Schema({
+    de: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    para: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    mensaje: {
+        type: String,
+        required: true
+    }
+}, {
+    timestamps: true
+});
+
+//Bring data
+MessageSchema.method('toJSON', function () {
+    const { __v,...object } = this.toObject();
+    return object;
+});
+
+module.exports = model('Message', MessageSchema);
