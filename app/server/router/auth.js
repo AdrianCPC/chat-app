@@ -1,32 +1,19 @@
-//Defining auth
+//Defining auth api/login
 const {Router} = require('express');
+//Controllers import
+const {addUser, loginUser, renewToken} = require('../controllers/auth');
 
 
 const router = Router();
 
 //Creating endpoints new users
-router.post('/new', (req, res) => {
-    res.json({
-        ok: true,
-        msg: 'new'
-    });
-});
+router.post('/new', addUser);
 
 //Creating Login
-router.post('/', (req, res) => {
-    res.json({
-        ok:true,
-        msg: 'login'
-    });
-});
+router.post('/', loginUser);
 
-//Revalidate token
-router.get('/renew', (req, res) => {
-    res.json({
-        ok: true,
-        msg: 'renew'
-    });
-});
+//Renew token
+router.get('/renew', renewToken);
 
 
 
