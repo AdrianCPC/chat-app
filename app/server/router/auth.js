@@ -5,6 +5,7 @@ const {check} = require('express-validator');
 //Controllers import
 const {addUser, loginUser, renewToken} = require('../controllers/auth');
 const { checkData } = require('../middlewares/check-data');
+const { validJWT } = require('../middlewares/valid-jwt');
 
 
 const router = Router();
@@ -21,7 +22,7 @@ router.post('/',[
     check('password', 'El password es obligatorio').not().isEmpty(), checkData] ,loginUser);
 
 //Renew token
-router.get('/renew', renewToken);
+router.get('/renew',validJWT,renewToken);
 
 
 
