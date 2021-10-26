@@ -1,7 +1,10 @@
 //Making controllers for Login
 const { response} = require('express');
+//Import system encrypt
+const bcrypt = require('bcrypt');
 //Imports models user
 const User = require('../models/user');
+const { generateJWT } = require('../helpers/jwt');
 
 
 
@@ -19,14 +22,22 @@ const addUser = async(req, res = response) => {
             });
         }
 
+        const user = new User(req.body);
+
         // Encrypt password
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(password, salt);
+
+        //Generate JWT
+        const token = await generateJWT(user.id);
 
         //Save user in BD
-        const user = new User(req.body);
+
         await user.save();
 
         res.json({
-            user
+            user,
+            token
         });
 
     } catch (error) {
