@@ -4,16 +4,21 @@ const {Router} = require('express');
 const {check} = require('express-validator');
 //Controllers import
 const {addUser, loginUser, renewToken} = require('../controllers/auth');
+const { checkData } = require('../middlewares/check-data');
 
 
 const router = Router();
 
 //Creating endpoints new users
-router.post('/new', addUser);
+router.post('/new', [
+    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    check('password','El password es obligatorio').not().isEmpty(),
+    check('email', 'El email es obligatorio').not().isEmpty() ,checkData],addUser);
 
 //Creating Login
-router.post('/',[check('email', 'El email es obligatorio').isEmail(),
- check('password', 'El password es obligatorio').not().isEmpty()] ,loginUser);
+router.post('/',[
+    check('email', 'El email es obligatorio').isEmail(),
+    check('password', 'El password es obligatorio').not().isEmpty(), checkData] ,loginUser);
 
 //Renew token
 router.get('/renew', renewToken);
