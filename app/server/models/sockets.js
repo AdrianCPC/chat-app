@@ -1,4 +1,5 @@
-
+const {checkJWT} = require('../helpers/jwt');
+const {userConnect, userDisconnect} = require('../controllers/sockets')
 
 class Sockets {
 
@@ -11,7 +12,15 @@ class Sockets {
 
     socketEvents() {
         // On connection
-        this.io.on('connection', ( socket ) => {
+        this.io.on('connection', async ( socket ) => {
+
+            const [valid, uid] = checkJWT(socket.handshake.query['h-token'] );
+
+            if (!valid) {
+                console.log('socket no identificado')
+                return socket.disconnect();
+            }
+            await userConnect(uid);
             //Check JWT
             //Token no valid, desconnect
             //User active by UID
@@ -21,10 +30,11 @@ class Sockets {
             //Disconnect user to BD
             // Escuchar evento: mensaje-to-server
 
-            socket.on('mensaje-to-server', ( data ) => {
-                console.log( data );
+            socket.on('disconnect', async() => {
+                await userDisconnect(uid);
+                // console.log( data );
                 
-                this.io.emit('mensaje-from-server', data );
+                // this.io.emit('mensaje-from-server', data );
             });
             
         

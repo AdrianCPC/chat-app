@@ -1,7 +1,9 @@
 //Import message
 const Message = require('../models/message');
 
+//Adding new endpoint for catch messages
 const obtainChat = async(req, res) =>{
+
     const myID = req.uid;
     const messagesDe = req.params.de;
 
@@ -16,8 +18,7 @@ const obtainChat = async(req, res) =>{
 
     res.json({
         ok:true,
-        myID,
-        msg: last30
+        messages: last30
     })
 }
 
