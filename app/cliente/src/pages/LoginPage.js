@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
@@ -6,6 +6,17 @@ export const LoginPage = () => {
         email: "test1@test.com",
         password: "123456",
         rememberme: false,
+    });
+
+    useEffect(() => {
+        const email = localStorage.getItem("email");
+        if (email) {
+            setForm({
+                ...form,
+                email,
+                rememberme: true,
+            });
+        }
     });
 
     const onChange = ({ target }) => {
@@ -27,7 +38,13 @@ export const LoginPage = () => {
     const onSubmit = (ev) => {
         ev.preventDefault();
 
-        console.log(form);
+        form.rememberme
+            ? localStorage.setItem("email", form.email)
+            : localStorage.removeItem("email");
+
+        const { email, password } = form;
+        console.log(email, password);
+        //llamar back
     };
 
     return (
