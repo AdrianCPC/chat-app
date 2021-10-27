@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
     const [form, setForm] = useState({
-        email: "123",
-        password: "456",
-        rememberme: true,
+        email: "test1@test.com",
+        password: "123456",
+        rememberme: false,
     });
 
     const onChange = ({ target }) => {
@@ -24,8 +24,17 @@ export const LoginPage = () => {
         });
     };
 
+    const onSubmit = (ev) => {
+        ev.preventDefault();
+
+        console.log(form);
+    };
+
     return (
-        <form className="login100-form validate-form flex-sb flex-w">
+        <form
+            className="login100-form validate-form flex-sb flex-w"
+            onSubmit={onSubmit}
+        >
             <span className="login100-form-title mb-3">Chat - Ingreso</span>
 
             <div className="wrap-input100 validate-input mb-3">
@@ -59,8 +68,8 @@ export const LoginPage = () => {
                         id="ckb1"
                         type="checkbox"
                         name="rememberme"
-                        value={form.rememberme}
-                        onChange={onChange}
+                        checked={form.rememberme}
+                        readOnly
                     />
                     <label className="label-checkbox100">Recordarme</label>
                 </div>
