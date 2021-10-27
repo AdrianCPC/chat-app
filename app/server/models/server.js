@@ -20,13 +20,13 @@ class Server {
 
         // Http server
         this.server = http.createServer( this.app );
-        
-        // Configuraciones de sockets
+
+        // Config sockets
         this.io = socketio( this.server, { /* configuraciones */ } );
     }
 
     middlewares() {
-        // Desplegar el directorio público
+        // Deploy public directory
         this.app.use( express.static( path.resolve( __dirname, '../public' ) ) );
 
         //Cors connection
@@ -34,26 +34,26 @@ class Server {
 
         //Reading body with parsing
         this.app.use(express.json());
+
         //Endpoints from routes(API)
         this.app.use('/api/login', require('../router/auth') );
         this.app.use('/api/messages', require('../router/messages') );
     }
 
-    // Esta configuración se puede tener aquí o como propieda de clase
-    // depende mucho de lo que necesites
+    //Config sockets new
     configurarSockets() {
         new Sockets( this.io );
     }
 
     execute() {
 
-        // Inicializar Middlewares
+        // Init Middlewares
         this.middlewares();
 
-        // Inicializar sockets
+        // Init sockets
         this.configurarSockets();
 
-        // Inicializar Server
+        // Init Server
         this.server.listen( this.port, () => {
             console.log('Server corriendo en puerto:', this.port );
         });

@@ -14,7 +14,7 @@ const router = Router();
 router.post('/new', [
     check('nombre','El nombre es obligatorio').not().isEmpty(),
     check('password','El password es obligatorio').not().isEmpty(),
-    check('email', 'El email es obligatorio').not().isEmpty() ,checkData],addUser);
+    check('email', 'El email es obligatorio').isEmail() ,checkData],addUser);
 
 //Creating Login
 router.post('/',[
@@ -23,10 +23,6 @@ router.post('/',[
 
 //Renew token
 router.get('/renew',validJWT,renewToken);
-
-
-
-
 
 
 
