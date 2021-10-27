@@ -2,7 +2,7 @@
 _Proyecto MERN, creado de manera colaborativa con el fin de realizar una aplicación web de chat empresarial._.
 
 ## Link a página desplegada 📦
-* [Video Club](No Disponible) - Acceso página
+* [Chat](No Disponible) - Acceso página
 
 ## Autores ✒️
 * **James Rodriguez** - 📢 - [jerodriguez6](https://github.com/jerodriguez6)
